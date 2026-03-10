@@ -1,0 +1,6 @@
+.DS_Store
+*.jar
+*.war
+*.zip
+*.tar.gz
+cache/
