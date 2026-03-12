@@ -12,6 +12,12 @@ chmod +x build-hadoop-docker.sh
 ./build-hadoop-docker.sh
 ```
 
+## To start the docker container
+
+```bash
+./start-hadoop.sh
+```
+
 The Hadoop cluster will be running post script completion
 
 ## Run with Docker Compose

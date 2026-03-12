@@ -10,9 +10,9 @@ services:
       - hadoop-net
     ports:
       - "9870:9870" # NameNode Web UI
-      - "9000:9000" # HDFS RPC
+      - "9000:9000" # IPC
       - "9864:9864" # DataNode Web UI
-      - "9866:9866" # DataNode Data Transfer
+      - "9866:9866" # DataNode
     volumes:
       # Mounts the directory created in Dockerfile.hadoop to persist HDFS data
       - hadoop_data:/hadoop
