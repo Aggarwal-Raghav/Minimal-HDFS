@@ -7,7 +7,7 @@
 
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/opt/hadoop/tmp/</value>
+    <value>/hadoop/tmp</value>
   </property>
 
 </configuration>

@@ -32,12 +32,12 @@ RUN set -ex; \
 
 COPY --from=builder --chown=hadoop:hadoop /opt/hadoop /opt/hadoop
 
-RUN mkdir -p /opt/hadoop/data /opt/hadoop/tmp && \
-    chown -R hadoop:hadoop /opt/hadoop/data /opt/hadoop/tmp
+RUN mkdir -p /hadoop/namenode /hadoop/datanode /hadoop/tmp && \
+    chown -R hadoop:hadoop /hadoop
 
-COPY --chown=hadoop:hadoop core-site.xml ${HADOOP_HOME}/etc/hadoop/
-COPY --chown=hadoop:hadoop hdfs-site.xml ${HADOOP_HOME}/etc/hadoop/
-COPY --chown=hadoop:hadoop hadoop-env.sh ${HADOOP_HOME}/etc/hadoop/
+COPY --chown=hadoop:hadoop hadoop-conf/core-site.xml ${HADOOP_HOME}/etc/hadoop/
+COPY --chown=hadoop:hadoop hadoop-conf/hdfs-site.xml ${HADOOP_HOME}/etc/hadoop/
+COPY --chown=hadoop:hadoop hadoop-conf/hadoop-env.sh ${HADOOP_HOME}/etc/hadoop/
 COPY --chown=hadoop:hadoop entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh

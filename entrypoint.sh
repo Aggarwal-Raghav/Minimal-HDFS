@@ -5,16 +5,16 @@ export HADOOP_HOME=/opt/hadoop
 
 # Update HOSTANME if in conf if its set as env vars
 if [ -n "$HOSTNAME" ]; then
-    echo "Setting DataNode hostname to: $HOSTNAME"
-    sed -i "/<\/configuration>/i \
-    <property>\n \
-      <name>dfs.datanode.hostname</name>\n \
-      <value>$HOSTNAME</value>\n \
-    </property>" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    if ! grep -q "dfs.datanode.hostname" "$HADOOP_HOME/etc/hadoop/hdfs-site.xml"; then
+        echo "Setting DataNode hostname to: $HOSTNAME"
+        sed -i "s|</configuration>|  <property>\n    <name>dfs.datanode.hostname</name>\n    <value>$HOSTNAME</value>\n  </property>\n\n</configuration>|g" "$HADOOP_HOME/etc/hadoop/hdfs-site.xml"
+    else
+        echo "DataNode hostname is already set in hdfs-site.xml"
+    fi
 fi
 
 # Format the NameNode for first time
-if [ ! -f /opt/hadoop/tmp/dfs/name/current/VERSION ]; then
+if [ ! -f /hadoop/namenode/current/VERSION ]; then
     echo "Formatting NameNode..."
     $HADOOP_HOME/bin/hdfs namenode -format -force -nonInteractive
 fi

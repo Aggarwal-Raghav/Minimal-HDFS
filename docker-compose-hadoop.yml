@@ -1,0 +1,28 @@
+services:
+  hadoop-cluster:
+    build:
+      context: .
+      dockerfile: Dockerfile.hadoop
+    image: minimal-hadoop:3.4.2
+    container_name: hadoop-cluster
+    hostname: hadoop-cluster
+    networks:
+      - hadoop-net
+    ports:
+      - "9870:9870" # NameNode Web UI
+      - "9000:9000" # HDFS RPC
+      - "9864:9864" # DataNode Web UI
+      - "9866:9866" # DataNode Data Transfer
+    volumes:
+      # Mounts the directory created in Dockerfile.hadoop to persist HDFS data
+      - hadoop_data:/hadoop
+
+volumes:
+  hadoop_data:
+    name: hadoop_data
+
+networks:
+  # Explicitly defining the network so Tez containers can join it later
+  hadoop-net:
+    name: hadoop-network
+    driver: bridge
